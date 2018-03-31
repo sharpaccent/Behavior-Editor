@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ca634d0f1ec1d4494c1ece88ff8cd9, type: 3}
+  m_Name: EditorSettings
+  m_EditorClassIdentifier: 
+  currentGraph: {fileID: 11400000, guid: 2ce9d6039a9e6b947b688a9b8434fbbf, type: 2}
+  stateNode: {fileID: 11400000, guid: 3de6cb72c5d54a842957b3d8754294e2, type: 2}
+  portalNode: {fileID: 11400000, guid: 765a518b20d9ed8449bf9d452b8f6306, type: 2}
+  transitionNode: {fileID: 11400000, guid: 02d1192eec6276044a75147866515bb8, type: 2}
+  commentNode: {fileID: 11400000, guid: 620177d1bd0b0454784ce845c386ea89, type: 2}
+  makeTransition: 0
+  skin: {fileID: 11400000, guid: b70ce5cc1a4ee204bb04e67f8d96e7b5, type: 2}
+  activeSkin: {fileID: 11400000, guid: 0aa2bdc068fc4d241a6953c78b6f8fd6, type: 2}
