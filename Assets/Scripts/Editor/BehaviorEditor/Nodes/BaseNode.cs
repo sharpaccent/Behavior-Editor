@@ -56,7 +56,8 @@ namespace SA.BehaviorEditor
         [HideInInspector]
         public State previousState;
 		public SerializedObject serializedState;
-		public ReorderableList onStateList;
+	        public ReorderableList onFixedList;
+		public ReorderableList onUpdateList;
 		public ReorderableList onEnterList;
 		public ReorderableList onExitList;
 	}
