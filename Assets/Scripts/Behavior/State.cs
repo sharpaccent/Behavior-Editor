@@ -7,7 +7,8 @@ namespace SA
     [CreateAssetMenu]
     public class State : ScriptableObject
     {
-        public StateActions[] onState;
+    	public StateActions[] onFixed;
+        public StateActions[] onUpdate;
         public StateActions[] onEnter;
         public StateActions[] onExit;
 
@@ -19,10 +20,15 @@ namespace SA
         {
             ExecuteActions(states, onEnter);
         }
+	
+	public void FixedTick(StateManager states)
+	{
+		ExecuteActions(states,onFixed);
+	}
 
         public void Tick(StateManager states)
         {
-            ExecuteActions(states, onState);
+            ExecuteActions(states, onUpdate);
             CheckTransitions(states);
         }
 
@@ -30,7 +36,6 @@ namespace SA
         {
             ExecuteActions(states, onExit);
         }
-
 
         public void CheckTransitions(StateManager states)
         {
