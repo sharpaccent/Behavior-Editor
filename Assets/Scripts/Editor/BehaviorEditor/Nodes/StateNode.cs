@@ -84,8 +84,10 @@ namespace SA.BehaviorEditor
 					
 					b.stateRef.serializedState.Update();
                 
+		    EditorGUILayout.LabelField("");
+                    b.stateRef.onFixedList.DoLayoutList();
                     EditorGUILayout.LabelField("");
-                    b.stateRef.onStateList.DoLayoutList();
+                    b.stateRef.onUpdateList.DoLayoutList();
                     EditorGUILayout.LabelField("");
 					b.stateRef.onEnterList.DoLayoutList();
                     EditorGUILayout.LabelField("");
@@ -93,7 +95,7 @@ namespace SA.BehaviorEditor
 
 					b.stateRef.serializedState.ApplyModifiedProperties();
 
-                    float standard = 300;
+                    float standard = 400;
                     standard += (b.stateRef.onUpdateList.count + b.stateRef.onEnterList.count + b.stateRef.onEnterList.count + b.stateRef.onFixedList.count) * 20;
                     b.windowRect.height = standard;
                 }   
