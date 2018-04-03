@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -22,7 +22,10 @@ namespace SA.BehaviorEditor
 		Vector2 scrollPos;
 		static BehaviorEditor editor;
 		public static StateManager currentStateManager;
+		public static bool forceSetDirty;
 		static StateManager prevStateManager;
+		static State previousState;
+
 
 		public enum UserActions
         {
@@ -46,10 +49,22 @@ namespace SA.BehaviorEditor
 			activeStyle = settings.activeSkin.GetStyle("window");
 
 		}
-        #endregion
+		#endregion
 
-        #region GUI Methods
-        private void OnGUI()
+		private void Update()
+		{
+			if (currentStateManager != null)
+			{
+				if (previousState != currentStateManager.currentState)
+				{
+					Repaint();
+					previousState = currentStateManager.currentState;
+				}
+			}
+		}
+
+		#region GUI Methods
+		private void OnGUI()
         {
 			if (Selection.activeTransform != null)
 			{
@@ -91,6 +106,22 @@ namespace SA.BehaviorEditor
                 Repaint();
             }
 
+			if (forceSetDirty)
+			{
+				forceSetDirty = false;
+				EditorUtility.SetDirty(settings);
+				EditorUtility.SetDirty(settings.currentGraph);
+
+				for (int i = 0; i < settings.currentGraph.windows.Count; i++)
+				{
+					BaseNode n = settings.currentGraph.windows[i];
+					if(n.stateRef.currentState != null)
+						EditorUtility.SetDirty(n.stateRef.currentState);
+			
+				}
+
+			}
+			
 		}
 
 		void DrawWindows()
@@ -156,6 +187,7 @@ namespace SA.BehaviorEditor
                 if(e.type == EventType.MouseDown)
                 {
                     RightClick(e);
+					
                 }
             }
 
@@ -338,8 +370,9 @@ namespace SA.BehaviorEditor
                     break;
             }
 
-            EditorUtility.SetDirty(settings);
-        }
+			forceSetDirty = true;
+        
+		}
 
 		public static BaseNode AddTransitionNode(BaseNode enterNode, Vector3 pos)
 		{
