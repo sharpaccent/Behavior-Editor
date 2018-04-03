@@ -59,7 +59,9 @@ namespace SA.BehaviorEditor
 						BehaviorEditor.AddTransitionNodeFromTransition(b.stateRef.currentState.transitions[i], b, pos);
 					}
 
+					BehaviorEditor.forceSetDirty = true;
 				}
+				
 			}
 
 			if (b.isDuplicate)
@@ -83,10 +85,9 @@ namespace SA.BehaviorEditor
 					}
 					
 					b.stateRef.serializedState.Update();
-                
-		    EditorGUILayout.LabelField("");
-                    b.stateRef.onFixedList.DoLayoutList();
-                    EditorGUILayout.LabelField("");
+					EditorGUILayout.LabelField("");
+					b.stateRef.onFixedList.DoLayoutList();
+					EditorGUILayout.LabelField("");
                     b.stateRef.onUpdateList.DoLayoutList();
                     EditorGUILayout.LabelField("");
 					b.stateRef.onEnterList.DoLayoutList();

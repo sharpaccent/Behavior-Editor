@@ -76,11 +76,12 @@ namespace SA.BehaviorEditor
             {
                 b.transRef.previousCondition = transition.condition;
                 b.isDuplicate = BehaviorEditor.settings.currentGraph.IsTransitionDuplicate(b);
-              
-                if(!b.isDuplicate)
+				
+				if (!b.isDuplicate)
                 {
-                   // BehaviorEditor.settings.currentGraph.SetNode(this);   
-                }
+					BehaviorEditor.forceSetDirty = true;
+					// BehaviorEditor.settings.currentGraph.SetNode(this);   
+				}
             }
             
         }
