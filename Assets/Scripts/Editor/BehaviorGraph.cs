@@ -8,8 +8,9 @@ namespace SA.BehaviorEditor
     [CreateAssetMenu]
     public class BehaviorGraph : ScriptableObject
     {
-	
+	[SerializeField]
         public List<BaseNode> windows = new List<BaseNode>();
+	[SerializeField]
         public int idCount;
         List<int> indexToDelete = new List<int>();
 
