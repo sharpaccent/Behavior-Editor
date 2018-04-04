@@ -12,8 +12,8 @@ namespace SA
         public StateActions[] onEnter;
         public StateActions[] onExit;
 
-
         public int idCount;
+		[SerializeField]
         public List<Transition> transitions = new List<Transition>();
 
         public void OnEnter(StateManager states)
@@ -21,10 +21,10 @@ namespace SA
             ExecuteActions(states, onEnter);
         }
 	
-	public void FixedTick(StateManager states)
-	{
-		ExecuteActions(states,onFixed);
-	}
+		public void FixedTick(StateManager states)
+		{
+			ExecuteActions(states,onFixed);
+		}
 
         public void Tick(StateManager states)
         {

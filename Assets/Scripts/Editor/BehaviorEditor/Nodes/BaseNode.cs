@@ -22,6 +22,8 @@ namespace SA.BehaviorEditor
 		public bool isOnCurrent;
 
         public bool collapse;
+		public bool showActions = true;
+		public bool showEnterExit = false;
         [HideInInspector]
         public bool previousCollapse;
 
@@ -56,7 +58,7 @@ namespace SA.BehaviorEditor
         [HideInInspector]
         public State previousState;
 		public SerializedObject serializedState;
-	        public ReorderableList onFixedList;
+	    public ReorderableList onFixedList;
 		public ReorderableList onUpdateList;
 		public ReorderableList onEnterList;
 		public ReorderableList onExitList;

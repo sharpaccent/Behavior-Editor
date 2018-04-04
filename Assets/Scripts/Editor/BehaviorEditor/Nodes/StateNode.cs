@@ -83,21 +83,29 @@ namespace SA.BehaviorEditor
 
 					//	SerializedObject serializedState = new SerializedObject(b.stateRef.currentState);
 					}
-					
+
+					float standard = 150;
 					b.stateRef.serializedState.Update();
-					EditorGUILayout.LabelField("");
-					b.stateRef.onFixedList.DoLayoutList();
-					EditorGUILayout.LabelField("");
-                    b.stateRef.onUpdateList.DoLayoutList();
-                    EditorGUILayout.LabelField("");
-					b.stateRef.onEnterList.DoLayoutList();
-                    EditorGUILayout.LabelField("");
-					b.stateRef.onExitList.DoLayoutList();
+					b.showActions = EditorGUILayout.Toggle("Show Actions ", b.showActions);
+					if (b.showActions)
+					{
+						EditorGUILayout.LabelField("");
+						b.stateRef.onFixedList.DoLayoutList();
+						EditorGUILayout.LabelField("");
+						b.stateRef.onUpdateList.DoLayoutList();
+						standard += 100 + 40 + (b.stateRef.onUpdateList.count + b.stateRef.onFixedList.count) * 20;
+					}
+					b.showEnterExit = EditorGUILayout.Toggle("Show Enter/Exit ", b.showEnterExit);
+					if (b.showEnterExit)
+					{
+						EditorGUILayout.LabelField("");
+						b.stateRef.onEnterList.DoLayoutList();
+						EditorGUILayout.LabelField("");
+						b.stateRef.onExitList.DoLayoutList();
+						standard += 100 + 40 + (b.stateRef.onEnterList.count + b.stateRef.onExitList.count) * 20;
+					}
 
 					b.stateRef.serializedState.ApplyModifiedProperties();
-
-                    float standard = 400;
-                    standard += (b.stateRef.onUpdateList.count + b.stateRef.onEnterList.count + b.stateRef.onEnterList.count + b.stateRef.onFixedList.count) * 20;
                     b.windowRect.height = standard;
                 }   
             }
