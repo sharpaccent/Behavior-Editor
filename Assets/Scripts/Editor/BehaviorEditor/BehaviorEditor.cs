@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -20,6 +20,7 @@ namespace SA.BehaviorEditor
         GUIStyle style;
 		GUIStyle activeStyle;
 		Vector2 scrollPos;
+		Vector2 scrollStartPos;
 		static BehaviorEditor editor;
 		public static StateManager currentStateManager;
 		public static bool forceSetDirty;
@@ -29,7 +30,7 @@ namespace SA.BehaviorEditor
 
 		public enum UserActions
         {
-            addState,addTransitionNode,deleteNode,commentNode,makeTransition,makePortal
+            addState,addTransitionNode,deleteNode,commentNode,makeTransition,makePortal,resetPan
         }
         #endregion
 
@@ -75,6 +76,8 @@ namespace SA.BehaviorEditor
 					Repaint();
 				}
 			}
+
+		
 
 			Event e = Event.current;
             mousePosition = e.mousePosition;
@@ -206,7 +209,50 @@ namespace SA.BehaviorEditor
                     MakeTransition();
                 }
             }
+
+			if (e.button == 2)
+			{
+				if (e.type == EventType.MouseDown)
+				{
+					scrollStartPos = e.mousePosition;
+				}
+				else if (e.type == EventType.MouseDrag)
+				{
+					HandlePanning(e);
+				}
+				else if (e.type == EventType.MouseUp)
+				{
+
+				}
+			}
         }
+
+		void HandlePanning(Event e)
+		{
+			Vector2 diff = e.mousePosition - scrollStartPos;
+			diff *= .6f;
+			scrollStartPos = e.mousePosition;
+			scrollPos += diff;
+
+			for (int i = 0; i < settings.currentGraph.windows.Count; i++)
+			{
+				BaseNode b = settings.currentGraph.windows[i];
+				b.windowRect.x += diff.x;
+				b.windowRect.y += diff.y;
+			}
+		}
+
+		void ResetScroll()
+		{
+			for (int i = 0; i < settings.currentGraph.windows.Count; i++)
+			{
+				BaseNode b = settings.currentGraph.windows[i];
+				b.windowRect.x -= scrollPos.x;
+				b.windowRect.y -= scrollPos.y;
+			}
+
+			scrollPos = Vector2.zero;
+		}
 
         void RightClick(Event e)
         {
@@ -274,7 +320,9 @@ namespace SA.BehaviorEditor
                 menu.AddItem(new GUIContent("Add State"), false, ContextCallback, UserActions.addState);
 				menu.AddItem(new GUIContent("Add Portal"), false, ContextCallback, UserActions.makePortal);
 				menu.AddItem(new GUIContent("Add Comment"), false, ContextCallback, UserActions.commentNode);
-            }
+				menu.AddSeparator("");
+				menu.AddItem(new GUIContent("Reset Panning"), false, ContextCallback, UserActions.resetPan);
+			}
             else
             {
                 menu.AddDisabledItem(new GUIContent("Add State"));
@@ -368,6 +416,9 @@ namespace SA.BehaviorEditor
                     transitFromId = selectedNode.id;
                     settings.makeTransition = true;
                     break;
+				case UserActions.resetPan:
+					ResetScroll();
+					break;
             }
 
 			forceSetDirty = true;
