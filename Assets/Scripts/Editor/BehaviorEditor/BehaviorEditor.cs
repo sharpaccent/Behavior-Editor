@@ -26,6 +26,7 @@ namespace SA.BehaviorEditor
 		public static bool forceSetDirty;
 		static StateManager prevStateManager;
 		static State previousState;
+		int nodesToDelete;
 
 
 		public enum UserActions
@@ -62,6 +63,16 @@ namespace SA.BehaviorEditor
 					previousState = currentStateManager.currentState;
 				}
 			}
+
+			if (nodesToDelete > 0)
+			{
+				if (settings.currentGraph != null)
+				{		
+					settings.currentGraph.DeleteWindowsThatNeedTo();
+					Repaint();
+				}
+				nodesToDelete = 0;
+			}
 		}
 
 		#region GUI Methods
@@ -85,14 +96,14 @@ namespace SA.BehaviorEditor
 
             DrawWindows();
 
-            if(e.type == EventType.MouseDrag)
-            {
+			if (e.type == EventType.MouseDrag)
+			{
 				if (settings.currentGraph != null)
 				{
-					settings.currentGraph.DeleteWindowsThatNeedTo();
+					//settings.currentGraph.DeleteWindowsThatNeedTo();
 					Repaint();
 				}
-            }
+			}
 
 			if (GUI.changed)
 			{
@@ -410,6 +421,7 @@ namespace SA.BehaviorEditor
 						enterNode.stateRef.currentState.RemoveTransition(selectedNode.transRef.transitionId);
 					}
 
+					nodesToDelete++;
                     settings.currentGraph.DeleteNode(selectedNode.id);
                     break;
                 case UserActions.makeTransition:
