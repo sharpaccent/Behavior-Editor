@@ -418,7 +418,8 @@ namespace SA.BehaviorEditor
 					if (selectedNode.drawNode is TransitionNode)
 					{
 						BaseNode enterNode = settings.currentGraph.GetNodeWithIndex(selectedNode.enterNode);
-						enterNode.stateRef.currentState.RemoveTransition(selectedNode.transRef.transitionId);
+						if (enterNode != null)
+							enterNode.stateRef.currentState.RemoveTransition(selectedNode.transRef.transitionId);
 					}
 
 					nodesToDelete++;
