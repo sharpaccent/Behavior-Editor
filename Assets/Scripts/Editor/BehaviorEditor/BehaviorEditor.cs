@@ -221,7 +221,7 @@ namespace SA.BehaviorEditor
                 }
             }
 
-			if (e.button == 2)
+			if (e.button == 2 || e.button == 0 && e.modifiers == EventModifiers.Alt)
 			{
 				if (e.type == EventType.MouseDown)
 				{
